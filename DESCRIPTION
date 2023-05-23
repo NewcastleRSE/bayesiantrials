@@ -14,3 +14,9 @@ Imports:
     fitdistrplus,
     rjags
 RoxygenNote: 7.2.3
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)
