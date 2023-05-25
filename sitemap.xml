@@ -19,19 +19,19 @@
     <loc>https://newcastlerse.github.io/bayesiantrials/index.html</loc>
   </url>
   <url>
-    <loc>https://newcastlerse.github.io/bayesiantrials/reference/Bayes.inf.html</loc>
+    <loc>https://newcastlerse.github.io/bayesiantrials/reference/BayesInf.html</loc>
+  </url>
+  <url>
+    <loc>https://newcastlerse.github.io/bayesiantrials/reference/CalculateAssurance.html</loc>
+  </url>
+  <url>
+    <loc>https://newcastlerse.github.io/bayesiantrials/reference/CalculateMode.html</loc>
+  </url>
+  <url>
+    <loc>https://newcastlerse.github.io/bayesiantrials/reference/CalculateSampleSize.html</loc>
   </url>
   <url>
     <loc>https://newcastlerse.github.io/bayesiantrials/reference/bayesiantrials-package.html</loc>
-  </url>
-  <url>
-    <loc>https://newcastlerse.github.io/bayesiantrials/reference/getAssurance.html</loc>
-  </url>
-  <url>
-    <loc>https://newcastlerse.github.io/bayesiantrials/reference/getMode.html</loc>
-  </url>
-  <url>
-    <loc>https://newcastlerse.github.io/bayesiantrials/reference/getSampleSize.html</loc>
   </url>
   <url>
     <loc>https://newcastlerse.github.io/bayesiantrials/reference/hello.html</loc>
