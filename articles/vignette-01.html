@@ -147,7 +147,7 @@ care.</p>
 <span></span>
 <span><span class="va">ss</span> <span class="op">=</span> <span class="fu"><a href="../reference/getSampleSize.html">getSampleSize</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>, <span class="va">design</span>, L <span class="op">=</span> <span class="fl">100</span>, K <span class="op">=</span> <span class="fl">1000</span>, C <span class="op">=</span> <span class="va">clusterSize</span>, target <span class="op">=</span> <span class="fl">0.8</span>, alpha <span class="op">=</span> <span class="va">prob</span><span class="op">)</span></span>
 <span><span class="va">ss</span><span class="op">*</span><span class="va">clusterSize</span></span>
-<span><span class="co">#&gt; [1] 225</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 180</span></span></code></pre></div>
 <p>Check the assurance for this sample size</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getAssurance.html">getAssurance</a></span><span class="op">(</span><span class="va">ss</span>, <span class="va">design</span>, L <span class="op">=</span> <span class="fl">10</span>, K <span class="op">=</span> <span class="fl">1000</span>, C <span class="op">=</span> <span class="va">clusterSize</span><span class="op">)</span></span>
@@ -155,10 +155,10 @@ care.</p>
 <span><span class="co">#&gt; 0.8</span></span>
 <span><span class="fu"><a href="../reference/getAssurance.html">getAssurance</a></span><span class="op">(</span><span class="va">ss</span>, <span class="va">design</span>, L <span class="op">=</span> <span class="fl">100</span>, K <span class="op">=</span> <span class="fl">1000</span>, C <span class="op">=</span> <span class="va">clusterSize</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   5% </span></span>
-<span><span class="co">#&gt; 0.76</span></span>
+<span><span class="co">#&gt; 0.81</span></span>
 <span><span class="fu"><a href="../reference/getAssurance.html">getAssurance</a></span><span class="op">(</span><span class="va">ss</span>, <span class="va">design</span>, L <span class="op">=</span> <span class="fl">100</span>, K <span class="op">=</span> <span class="fl">1000</span>, C <span class="op">=</span> <span class="va">clusterSize</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   5% </span></span>
-<span><span class="co">#&gt; 0.82</span></span></code></pre></div>
+<span><span class="co">#&gt; 0.84</span></span></code></pre></div>
 <!-- ### sample size calculation ### -->
 <!-- ss.test = 10 -->
 <!-- C.test = 40:50 -->
@@ -278,7 +278,7 @@ arXiv:2208.12509</em>. <a href="https://arxiv.org/abs/2208.12509" class="externa
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by The package maintainer.</p>
+<p>Developed by Kathryn Garside.</p>
 </div>
 
 <div class="pkgdown-footer-right">
