@@ -73,30 +73,30 @@
 <p>This vignette describes the use of functions within the
 <code>bayesiantrials</code> package to perform a Bayesian design and
 analysis of two-arm cluster randomised trials using assurance. This
-approach is described in <span class="citation">Wilson (<a href="#ref-wilson2022" role="doc-biblioref">2022</a>)</span>.</p>
-<p>If not already installed, please follow the instructions on the
-package <a href="https://github.com/NewcastleRSE/bayesiantrials" class="external-link">GitHub
-page</a> before loading the library.</p>
+approach is described in <span class="citation">Wilson (<a href="#ref-wilson2022" role="doc-biblioref">2022</a>)</span>. We will
+describe the use of the following functions:</p>
+<ul>
+<li><code>simulateGaussianCopula</code></li>
+<li><code>getSampleSize</code></li>
+<li><code>getAssurance</code></li>
+</ul>
+<p>We will apply the Bayesian approach to calculate an appropriate
+sample size for the ICONS cluster RCT <span class="citation">Thomas et
+al. (<a href="#ref-thomas2015" role="doc-biblioref">2015</a>)</span>.
+The trial considers the effectiveness of a systematic voiding programme
+for people admitted to NHS stroke units with urinary incontinence. The
+primary outcome is the incontinence symptom severity total score at 3
+months post-randomisation. The voiding programme was compared to usual
+care.</p>
+<p>First we will load the package,</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://newcastlerse.github.io/bayesiantrials/">bayesiantrials</a></span><span class="op">)</span></span></code></pre></div>
-<div class="section level2">
-<h2 id="assurance">Assurance<a class="anchor" aria-label="anchor" href="#assurance"></a>
-</h2>
-</div>
-<div class="section level2">
-<h2 id="sample-size">Sample Size<a class="anchor" aria-label="anchor" href="#sample-size"></a>
-</h2>
-</div>
-<div class="section level2">
-<h2 id="icons-study">ICONS Study<a class="anchor" aria-label="anchor" href="#icons-study"></a>
-</h2>
-<p>Set the number of samples,</p>
+<p>Set the number of samples and define the priors,</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Number of samples</span></span>
-<span><span class="va">N</span> <span class="op">=</span> <span class="fl">10000</span>    </span></code></pre></div>
-<p>Define priors.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Minimal clinically important difference delta</span></span>
+<span><span class="va">N</span> <span class="op">=</span> <span class="fl">10000</span>    </span>
+<span></span>
+<span><span class="co"># Minimal clinically important difference delta</span></span>
 <span><span class="va">m_delta</span> <span class="op">=</span> <span class="fl">3.5</span> <span class="co"># Mean of delta</span></span>
 <span><span class="va">s_delta</span> <span class="op">=</span> <span class="fl">0.9</span> <span class="co"># Stdev of delta</span></span>
 <span></span>
@@ -115,7 +115,7 @@ page</a> before loading the library.</p>
 <span><span class="va">lambda_pr</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">N</span>,<span class="va">m_lambda</span>,<span class="va">s_lambda</span><span class="op">)</span></span></code></pre></div>
 <p>We can load the ICC estimates directly from the package as
 <code>icons_icc_data</code>,</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Estimates of intra-cluster correlation rho</span></span>
 <span><span class="va">rho</span> <span class="op">=</span> <span class="va">icons_icc_data</span></span>
 <span></span>
@@ -123,7 +123,7 @@ page</a> before loading the library.</p>
 <span><span class="va">m_sigma</span> <span class="op">=</span> <span class="fl">8.32</span> <span class="co"># Mean of standard deviation sigma</span></span>
 <span><span class="va">s_sigma</span> <span class="op">=</span> <span class="fl">1</span>    <span class="co"># Stdev of sigma</span></span></code></pre></div>
 <p>We define a joint prior distribution between <span class="math inline">\(\rho\)</span> and <span class="math inline">\(\sigma\)</span> via a Gaussian copula</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Correlation parameter for Gaussian Copula</span></span>
 <span><span class="va">gamma</span> <span class="op">=</span> <span class="fl">0.44</span></span>
 <span></span>
@@ -135,10 +135,10 @@ page</a> before loading the library.</p>
 <span><span class="va">sigmab_pr</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">rho_pr</span><span class="op">)</span><span class="op">*</span><span class="va">sigma_pr</span></span>
 <span><span class="va">sigmaw_pr</span> <span class="op">=</span> <span class="va">sigma_pr</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">rho_pr</span><span class="op">)</span></span></code></pre></div>
 <p>Combine all priors into a matrix,</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">design</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">lambda_pr</span>, <span class="va">delta_pr</span>, <span class="va">nu_pr</span>, <span class="va">sigmab_pr</span>, <span class="va">sigmaw_pr</span><span class="op">)</span></span></code></pre></div>
 <p>Calculate sample size</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Standard value for posterior probability</span></span>
 <span><span class="va">prob</span> <span class="op">=</span> <span class="fl">0.05</span> </span>
 <span></span>
@@ -147,18 +147,18 @@ page</a> before loading the library.</p>
 <span></span>
 <span><span class="va">ss</span> <span class="op">=</span> <span class="fu"><a href="../reference/getSampleSize.html">getSampleSize</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>, <span class="va">design</span>, L <span class="op">=</span> <span class="fl">100</span>, K <span class="op">=</span> <span class="fl">1000</span>, C <span class="op">=</span> <span class="va">clusterSize</span>, target <span class="op">=</span> <span class="fl">0.8</span>, alpha <span class="op">=</span> <span class="va">prob</span><span class="op">)</span></span>
 <span><span class="va">ss</span><span class="op">*</span><span class="va">clusterSize</span></span>
-<span><span class="co">#&gt; [1] 180</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 225</span></span></code></pre></div>
 <p>Check the assurance for this sample size</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/getAssurance.html">getAssurance</a></span><span class="op">(</span><span class="va">ss</span>, <span class="va">design</span>, L <span class="op">=</span> <span class="fl">10</span>, K <span class="op">=</span> <span class="fl">1000</span>, C <span class="op">=</span> <span class="va">clusterSize</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  5% </span></span>
-<span><span class="co">#&gt; 0.6</span></span>
+<span><span class="co">#&gt; 0.8</span></span>
 <span><span class="fu"><a href="../reference/getAssurance.html">getAssurance</a></span><span class="op">(</span><span class="va">ss</span>, <span class="va">design</span>, L <span class="op">=</span> <span class="fl">100</span>, K <span class="op">=</span> <span class="fl">1000</span>, C <span class="op">=</span> <span class="va">clusterSize</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   5% </span></span>
-<span><span class="co">#&gt; 0.78</span></span>
+<span><span class="co">#&gt; 0.76</span></span>
 <span><span class="fu"><a href="../reference/getAssurance.html">getAssurance</a></span><span class="op">(</span><span class="va">ss</span>, <span class="va">design</span>, L <span class="op">=</span> <span class="fl">100</span>, K <span class="op">=</span> <span class="fl">1000</span>, C <span class="op">=</span> <span class="va">clusterSize</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   5% </span></span>
-<span><span class="co">#&gt; 0.79</span></span></code></pre></div>
+<span><span class="co">#&gt; 0.82</span></span></code></pre></div>
 <!-- ### sample size calculation ### -->
 <!-- ss.test = 10 -->
 <!-- C.test = 40:50 -->
@@ -255,6 +255,15 @@ page</a> before loading the library.</p>
 <h3 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h3>
 <div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-thomas2015" class="csl-entry">
+Thomas, Lois H, Beverley French, Christopher J Sutton, Denise Forshaw,
+Michael J Leathley, Christopher R Burton, Brenda Roe, et al. 2015.
+<span>“Identifying Continence OptioNs After Stroke (ICONS): An Evidence
+Synthesis, Case Study and Exploratory Cluster Randomised Controlled
+Trial of the Introduction of a Systematic Voiding Programme for Patients
+with Urinary Incontinence After Stroke in Secondary Care.”</span>
+<em>Programme Grants for Applied Research</em> 3 (1).
+</div>
 <div id="ref-wilson2022" class="csl-entry">
 Wilson, Kevin J. 2022. <span>“Bayesian Design and Analysis of Two-Arm
 Cluster Randomised Trials Using Assurance.”</span> <em>arXiv Preprint
@@ -262,9 +271,7 @@ arXiv:2208.12509</em>. <a href="https://arxiv.org/abs/2208.12509" class="externa
 </div>
 </div>
 </div>
-</div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
-    </nav></aside>
+  </main>
 </div>
 
 
