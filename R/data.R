@@ -4,11 +4,7 @@
 #' feasibility study Thomas (2015).
 #'
 #' @format ## `icons_icc_data`
-#' A data frame with 10,001 rows and 2 columns:
-#' \describe{
-#'   \item{V1}{Index}
-#'   \item{V2}{ICC estimate}
-#'}
+#' A vector of length 10,000
 #'
 #' @references
 #' Thomas, Lois H, Beverley French, Christopher J Sutton,

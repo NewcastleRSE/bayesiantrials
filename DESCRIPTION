@@ -12,6 +12,7 @@ LazyData: true
 Imports:
     DirichletReg,
     fitdistrplus,
+    mvtnorm,
     rjags
 RoxygenNote: 7.2.3
 Suggests: 
@@ -19,4 +20,4 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5.0)

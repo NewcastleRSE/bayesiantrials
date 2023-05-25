@@ -13,7 +13,7 @@ getSampleSize(
   target = 0.8,
   a = 100,
   eps = 0.001,
-  p = 0.05
+  alpha = 0.05
 )
 }
 \arguments{
@@ -33,7 +33,7 @@ getSampleSize(
 
 \item{eps}{Analysis Gamma prior parameters}
 
-\item{p}{Posterior probability}
+\item{alpha}{Posterior probability}
 }
 \value{
 Minimum sample size for target assurance. Returns target assurance not met for any sample size in ss.

@@ -4,7 +4,7 @@
 \alias{getAssurance}
 \title{Function for calculating the assurance}
 \usage{
-getAssurance(ss, design, L, K, C, a = 100, eps = 0.001, p = 0.05)
+getAssurance(ss, design, L, K, C, a = 100, eps = 0.001, alpha = 0.05)
 }
 \arguments{
 \item{ss}{Sample size}
@@ -21,7 +21,7 @@ getAssurance(ss, design, L, K, C, a = 100, eps = 0.001, p = 0.05)
 
 \item{eps}{Analysis Gamma prior parameters}
 
-\item{p}{Posterior probability}
+\item{alpha}{Posterior probability}
 }
 \value{
 Assurance

@@ -1,8 +1,4 @@
 ################################################################################
-library(rjags)
-library(DirichletReg)
-
-################################################################################
 #' Function for performing Bayesian inference using rjags
 #'
 #' @param tot Total sample size
@@ -14,6 +10,7 @@ library(DirichletReg)
 #' @param eps Analysis Gamma prior parameters
 #'
 #' @return MCMC samples
+#' @import rjags
 #' @export
 #'
 #' @examples
@@ -24,7 +21,10 @@ Bayes.inf = function(tot, y, X, C, cl, K, eps = 0.001){
 
   dat <- list("N" = tot, "Y" = y, "X" = X, "Nclust" = C, "Cl"= cl,eps = eps)
 
-  mod = jags.model(file = "files/mixed.R", data = dat, n.adapt = 1000, quiet = TRUE)
+  # mod = jags.model(file = "files/mixed.R", data = dat, n.adapt = 1000, quiet = TRUE)
+
+  mod = jags.model(file = system.file("jags","mixed.R", package = "bayesiantrials"), data = dat, n.adapt = 1000, quiet = TRUE)
+
   update(mod, n.iter = K,progress.bar="none")
   params <- c("delta")
 
@@ -47,13 +47,14 @@ Bayes.inf = function(tot, y, X, C, cl, K, eps = 0.001){
 #' @param C Number of clusters
 #' @param a Dirichlet parameter
 #' @param eps Analysis Gamma prior parameters
-#' @param p Posterior probability
+#' @param alpha Posterior probability
 #'
 #' @return Assurance
+#' @import DirichletReg
 #' @export
 #'
 #' @examples
-getAssurance = function(ss, design, L, K, C, a = 100, eps = 0.001, p = 0.05){
+getAssurance = function(ss, design, L, K, C, a = 100, eps = 0.001, alpha = 0.05){
 
   I = 0
 
@@ -79,11 +80,11 @@ getAssurance = function(ss, design, L, K, C, a = 100, eps = 0.001, p = 0.05){
 
     delta.out = Bayes.inf(tot, y, X, C, cl, K, eps)
 
-    I = I + ifelse(quantile(delta.out,p)>0,1,0)
+    I = I + ifelse(quantile(delta.out,alpha)>0,1,0)
 
   }
 
-  A = I/L
+    A = I/L
 
   return(A)
 }
@@ -101,16 +102,16 @@ getAssurance = function(ss, design, L, K, C, a = 100, eps = 0.001, p = 0.05){
 #' @param target Target assurance
 #' @param a Dirichlet parameter
 #' @param eps Analysis Gamma prior parameters
-#' @param p Posterior probability
+#' @param alpha Posterior probability
 #'
 #' @return Minimum sample size for target assurance. Returns target assurance not met for any sample size in ss.
 #' @export
 #'
 #' @examples
-getSampleSize = function(ss, design, L, K, C, target = 0.8, a = 100, eps = 0.001, p = 0.05){
+getSampleSize = function(ss, design, L, K, C, target = 0.8, a = 100, eps = 0.001, alpha = 0.05){
 
   for (i in 1:length(ss)){
-    assure = getAssurance(ss[i], design, L, K, C, a, eps, p)
+    assure = getAssurance(ss[i], design, L, K, C, a, eps, alpha)
     if (assure >= target){
       ss = ss[i]
       break

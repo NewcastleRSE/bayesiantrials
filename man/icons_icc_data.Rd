@@ -6,18 +6,14 @@
 \title{Identifying Continence OptioNs after Stroke (ICONS)}
 \format{
 ## `icons_icc_data`
-A data frame with 10,001 rows and 2 columns:
-\describe{
-  \item{V1}{Index}
-  \item{V2}{ICC estimate}
-}
+A vector of length 10,000
 }
 \usage{
 icons_icc_data
 }
 \description{
 Estimates of the intra-cluster correlation coefficient based on a
-feasibility study \insertRef{thomas2015}{bayesiantrials}
+feasibility study Thomas (2015).
 }
 \references{
 Thomas, Lois H, Beverley French, Christopher J Sutton,

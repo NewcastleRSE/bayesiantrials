@@ -31,3 +31,259 @@ library(bayesiantrials)
 ## Sample Size
 
 ## ICONS Study
+
+Set the number of samples,
+
+```{r eval=TRUE}
+# Number of samples
+N = 10000    
+```
+
+Define priors.
+
+```{r eval=TRUE}
+# Minimal clinically important difference delta
+m_delta = 3.5 # Mean of delta
+s_delta = 0.9 # Stdev of delta
+
+delta_pr = rnorm(N,m_delta,s_delta)
+
+# Cluster size coefficient of variation
+m_nu = 0.49    # Mean of nu
+s_nu = 0.066   # Stdev of nu
+
+nu_pr = rgamma(N,(m_nu^2/s_nu^2),(m_nu/s_nu^2)) 
+
+# Overall mean effect lambda
+m_lambda = 1     # Mean of lambda
+s_lambda = 0.001 # Stdev of lambda
+
+lambda_pr = rnorm(N,m_lambda,s_lambda)
+```
+
+We can load the ICC estimates directly from the package as `icons_icc_data`,
+
+```{r eval=TRUE}
+# Estimates of intra-cluster correlation rho
+rho = icons_icc_data
+
+# Standard deviation sigma
+m_sigma = 8.32 # Mean of standard deviation sigma
+s_sigma = 1    # Stdev of sigma
+```
+
+We define a joint prior distribution between $\rho$ and $\sigma$ via a Gaussian copula
+
+```{r eval=TRUE}
+# Correlation parameter for Gaussian Copula
+gamma = 0.44
+
+sim <- simulateGaussianCopula(N, rho, m_sigma, s_sigma, gamma)
+
+rho_pr = sim[,1]
+sigma_pr = sim[,2]
+
+sigmab_pr = sqrt(rho_pr)*sigma_pr
+sigmaw_pr = sigma_pr*sqrt(1-rho_pr)
+```
+
+
+Combine all priors into a matrix,
+
+```{r eval=TRUE}
+design = cbind(lambda_pr, delta_pr, nu_pr, sigmab_pr, sigmaw_pr)
+```
+
+
+Calculate sample size
+
+```{r eval=TRUE}
+# Standard value for posterior probability
+prob = 0.05 
+
+# Try with a cluster size of 45
+clusterSize = 45
+
+ss = getSampleSize(1:50, design, L = 100, K = 1000, C = clusterSize, target = 0.8, alpha = prob)
+ss*clusterSize
+
+```
+
+
+
+Check the assurance for this sample size
+```{r eval=TRUE}
+getAssurance(ss, design, L = 10, K = 1000, C = clusterSize)
+getAssurance(ss, design, L = 100, K = 1000, C = clusterSize)
+getAssurance(ss, design, L = 100, K = 1000, C = clusterSize)
+```
+  
+  
+
+<!-- ### sample size calculation ### -->
+
+<!-- ss.test = 10 -->
+<!-- C.test = 40:50 -->
+
+<!-- ### power ### -->
+
+<!-- pow.ss = rep(0,length(C.test)) -->
+
+<!-- for (i in 1:length(C.test)){ -->
+
+<!-- pow.ss[i] = power.ss(100,delta,sigma,C=C.test[i],rho=median(rho),beta = beta,nu=nu, -->
+<!--          tailed="one",cluster=TRUE,cluster.eq = FALSE) -->
+
+<!-- } -->
+
+<!-- pow.ss*C.test -->
+
+<!-- ### hybrid MCID ### -->
+
+<!-- mcid.ss = rep(0,length(C.test)) -->
+
+<!-- for (i in 1:length(C.test)){ -->
+
+<!-- mcid.ss[i] = assurance.ss(100,delta,sigma.pr,C=C.test[i],rho=rho.pr,nu = nu.pr,beta=beta, -->
+<!--              cluster=TRUE,cluster.eq = FALSE,tailed="one") -->
+
+<!-- } -->
+
+<!-- mcid.ss*C.test -->
+
+<!-- ### full hybrid ### -->
+
+<!-- full.ss = rep(0,length(C.test)) -->
+
+<!-- for (i in 1:length(C.test)){ -->
+
+<!--   full.ss[i] = hybrid.ss(100,delta.pr,sigma.pr,C=C.test[i],rho=rho.pr,nu = nu.pr,beta=beta, -->
+<!--                               cluster=TRUE,cluster.eq = FALSE,tailed="one") -->
+
+<!-- } -->
+
+<!-- full.ss*C.test -->
+
+<!-- ### full Bayesian method ### -->
+
+<!-- ss.bayes = rep(0,length(C.test)) -->
+
+<!-- for (i in 1:length(C.test)){ -->
+
+<!--   print(i) -->
+
+<!--   ss.bayes[i] = sample.size(1:100,design,design.BL,N=5,C=C.test[i],target=0.8,100 -->
+<!--                             ,method="INLA") -->
+
+<!-- } -->
+
+<!-- ss.bayes*C.test -->
+
+<!-- ### changing the prior mean for delta ### -->
+
+<!-- delta.mean = c(seq(5,2.5,-0.5),2.25) -->
+
+<!-- sens.bayes = rep(0,length(delta.mean)) -->
+
+<!-- for (j in 1:length(delta.mean)){ -->
+
+<!--   print(j) -->
+
+<!-- delta.sens = rnorm(N,delta.mean[j],0.9) -->
+
+<!-- design.sens = cbind(alpha.pr,delta.sens,nu.pr,sigmab.pr,sigmaw.pr) -->
+
+<!--   sens.bayes[j] = sample.size(1:100,design.sens,design.BL,N=5,C=C,target=(1-beta),100 -->
+<!--                             ,method="INLA") -->
+
+<!-- } -->
+
+<!-- sens.bayes*40 -->
+
+<!-- full.sens = rep(0,length(delta.mean)) -->
+
+<!-- for (i in 1:length(delta.mean)){ -->
+
+<!--   print(i) -->
+
+<!--   delta.sens = rnorm(N,delta.mean[i],0.9) -->
+
+<!--   full.sens[i] = hybrid.ss(200,delta.sens,sigma.pr,C=C,rho=rho.pr,nu = nu.pr,beta=beta, -->
+<!--                          cluster=TRUE,cluster.eq = FALSE,tailed="one") -->
+
+<!-- } -->
+
+<!-- full.sens -->
+
+<!-- plot(delta.mean,sens.bayes*C,type="l",col=2,xlab="Mean of delta",ylab="Sample size") -->
+<!-- points(delta.mean,sens.bayes*C,col=2,pch=21,bg=2) -->
+<!-- #lines(delta.mean,full.sens*C,col=4) -->
+<!-- #points(delta.mean,full.sens*C,col=4,pch=21,bg=4) -->
+<!-- abline(h=360,col=3,lty=2) -->
+<!-- abline(h=480,col=5,lty=2) -->
+
+<!-- #bayes.mean.data = data.frame(delta.mean,sens.bayes) -->
+<!-- #colnames(bayes.mean.data)=c("mean","ss") -->
+
+<!-- #write.table(bayes.mean.data,"SampleSize_Delta_Mean.txt") -->
+
+<!-- ### changing the prior sd for delta ### -->
+
+<!-- delta.sd = seq(0.8,2,0.2) -->
+
+<!-- sd.bayes = rep(0,length(delta.sd)) -->
+
+<!-- for (j in 2:2){ -->
+
+<!--   print(j) -->
+
+<!--   delta.sdev = rnorm(N,3.5,delta.sd[j]) -->
+
+<!--   design.sens = cbind(alpha.pr,delta.sdev,nu.pr,sigmab.pr,sigmaw.pr) -->
+
+<!--   sd.bayes[j] = sample.size(1:100,design.sens,design.BL,N=5,C=C,target=(1-beta),100 -->
+<!--                               ,method="Bayes") -->
+
+<!-- } -->
+
+<!-- sd.bayes -->
+
+<!-- full.sd = rep(0,length(delta.sd)) -->
+
+<!-- for (i in 1:length(delta.sd)){ -->
+
+<!--   print(i) -->
+
+<!--   delta.sdev = rnorm(N,3.5,delta.sd[i]) -->
+
+<!--   full.sd[i] = hybrid.ss(200,delta.sdev,sigma.pr,C=C,rho=rho.pr,nu = nu.pr,beta=beta, -->
+<!--                            cluster=TRUE,cluster.eq = FALSE,tailed="one") -->
+
+<!-- } -->
+
+<!-- full.sd -->
+
+<!-- plot(delta.sd[2:7],sd.bayes[2:7]*C,type="l",col=2,xlab="St Dev of delta",ylab="Sample size",ylim=c(200,600)) -->
+<!-- points(delta.sd[2:7],sd.bayes[2:7]*C,col=2,pch=21,bg=2) -->
+<!-- #lines(delta.sd,sd.bayes*C,col=4) -->
+<!-- #points(delta.sd,sd.bayes*C,col=4,pch=21,bg=4) -->
+<!-- abline(h=360,col=3,lty=2) -->
+<!-- abline(h=480,col=5,lty=2) -->
+
+<!-- #bayes.sd.data = data.frame(delta.sd,sd.bayes) -->
+<!-- #colnames(bayes.sd.data)=c("sd","ss") -->
+
+<!-- #write.table(bayes.sd.data,"SampleSize_Delta_SD.txt") -->
+
+<!-- probs2 = 1-pnorm(2.52,3.5,delta.sd[2:7]) -->
+
+<!-- plot(delta.sd[2:7],probs2,type="l",col=4,xlab="St Dev of delta",ylab="Probability") -->
+<!-- points(delta.sd[2:7],probs2,col=4,pch=21,bg=4) -->
+
+
+
+<!-- ``` -->
+
+### References
+
+
