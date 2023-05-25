@@ -4,7 +4,7 @@
 \alias{Bayes.inf}
 \title{Function for performing Bayesian inference using rjags}
 \usage{
-Bayes.inf(tot, y, X, C, cl, K, eps = 0.001)
+Bayes.inf(tot, y, X, C, cl, K, eps = 0.001, model_file_path = NA)
 }
 \arguments{
 \item{tot}{Total sample size}
@@ -20,6 +20,8 @@ Bayes.inf(tot, y, X, C, cl, K, eps = 0.001)
 \item{K}{Number of MCMC samples}
 
 \item{eps}{Analysis Gamma prior parameters}
+
+\item{model_file_path}{Relative path to JAGS model file}
 }
 \value{
 MCMC samples

@@ -15,4 +15,13 @@ Useful links:
 }
 
 }
+\author{
+\strong{Maintainer}: Kathryn Garside \email{kathryn.garside@newcastle.ac.uk}
+
+Authors:
+\itemize{
+  \item Kevin Wilson \email{kevin.wilson@newcastle.ac.uk}
+}
+
+}
 \keyword{internal}

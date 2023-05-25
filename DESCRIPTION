@@ -2,8 +2,10 @@ Package: bayesiantrials
 Type: Package
 Title: Bayesian design and analysis of two-arm cluster randomised trials using assurance 
 Version: 0.1.0
-Author: Kevin Wilson <kevin.wilson@newcastle.ac.uk>
-Maintainer: Kathryn Garside <kathryn.garside@newcastle.ac.uk>
+Authors@R: c(
+    person("Kevin", "Wilson", role = c("aut"), email = "kevin.wilson@newcastle.ac.uk"),
+    person("Kathryn", "Garside", role = c("cre"), email = "kathryn.garside@newcastle.ac.uk")
+  )
 Description: This package implements the Bayesian approach for design and analysis of two-arm cluster randomised control trial using assurance detailed in Wilson (2022).
 License: MIT + file LICENSE
 Encoding: UTF-8

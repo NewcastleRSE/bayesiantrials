@@ -13,7 +13,8 @@ getSampleSize(
   target = 0.8,
   a = 100,
   eps = 0.001,
-  alpha = 0.05
+  alpha = 0.05,
+  model_file_path = NA
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ getSampleSize(
 \item{eps}{Analysis Gamma prior parameters}
 
 \item{alpha}{Posterior probability}
+
+\item{model_file_path}{Relative path to JAGS model file}
 }
 \value{
 Minimum sample size for target assurance. Returns target assurance not met for any sample size in ss.
