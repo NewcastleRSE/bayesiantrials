@@ -4,9 +4,9 @@
 \name{bayesiantrials-package}
 \alias{bayesiantrials}
 \alias{bayesiantrials-package}
-\title{bayesiantrials: What the Package Does (Title Case)}
+\title{bayesiantrials: Bayesian design and analysis of two-arm cluster randomised trials using assurance}
 \description{
-More about what it does (maybe more than one line) Use four spaces when indenting paragraphs within the Description.
+This package implements the Bayesian approach for design and analysis of two-arm cluster randomised control trial using assurance detailed in Wilson (2022).
 }
 \seealso{
 Useful links:
