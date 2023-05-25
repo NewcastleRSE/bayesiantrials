@@ -17,31 +17,25 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette describes the use of functions within the `bayesiantrials` package to perform a Bayesian design and analysis of two-arm cluster randomised trials using assurance. This approach is described in @wilson2022.
+This vignette describes the use of functions within the `bayesiantrials` package to perform a Bayesian design and analysis of two-arm cluster randomised trials using assurance. This approach is described in @wilson2022. We will describe the use of the following functions:
 
-If not already installed, please follow the instructions on the package [GitHub page](https://github.com/NewcastleRSE/bayesiantrials) before loading the library.
+- `simulateGaussianCopula`
+- `getSampleSize`
+- `getAssurance`
 
+We will apply the Bayesian approach to calculate an appropriate sample size for the ICONS cluster RCT @thomas2015. The trial considers the effectiveness of a systematic voiding programme for people admitted to NHS stroke units with urinary incontinence. The primary outcome is the incontinence symptom severity total score at 3 months post-randomisation. The voiding programme was compared to usual care. 
 
+First we will load the package,
 ```{r setup}
 library(bayesiantrials)
 ```
 
-## Assurance
-
-## Sample Size
-
-## ICONS Study
-
-Set the number of samples,
+Set the number of samples and define the priors,
 
 ```{r eval=TRUE}
 # Number of samples
 N = 10000    
-```
 
-Define priors.
-
-```{r eval=TRUE}
 # Minimal clinically important difference delta
 m_delta = 3.5 # Mean of delta
 s_delta = 0.9 # Stdev of delta
