@@ -9,8 +9,8 @@ library(mvtnorm)
 #' @export
 #'
 #' @examples
-#' getMode(c(1,2,3,2,3,4,2))
-getMode = function(v) {
+#' CalculateMode(c(1,2,3,2,3,4,2))
+CalculateMode = function(v) {
   uniqv = unique(v)
   uniqv[which.max(tabulate(match(v, uniqv)))]
 }
@@ -31,7 +31,7 @@ getMode = function(v) {
 #' @export
 #'
 #' @examples
-simulateGaussianCopula <- function(N, rho, m_sigma, s_sigma, gamma){
+SimulateGaussianCopula <- function(N, rho, m_sigma, s_sigma, gamma){
 
   qmarg1 = function(p) quantile(rho,p)
   qmarg2 = function(p) qnorm(p,m_sigma,s_sigma)
