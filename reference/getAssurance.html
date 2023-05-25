@@ -48,7 +48,17 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getAssurance</span><span class="op">(</span><span class="va">ss</span>, <span class="va">design</span>, <span class="va">L</span>, <span class="va">K</span>, <span class="va">C</span>, a <span class="op">=</span> <span class="fl">100</span>, eps <span class="op">=</span> <span class="fl">0.001</span>, alpha <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">getAssurance</span><span class="op">(</span></span>
+<span>  <span class="va">ss</span>,</span>
+<span>  <span class="va">design</span>,</span>
+<span>  <span class="va">L</span>,</span>
+<span>  <span class="va">K</span>,</span>
+<span>  <span class="va">C</span>,</span>
+<span>  a <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  eps <span class="op">=</span> <span class="fl">0.001</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>  model_file_path <span class="op">=</span> <span class="cn">NA</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -84,6 +94,10 @@
 <dt>alpha</dt>
 <dd><p>Posterior probability</p></dd>
 
+
+<dt>model_file_path</dt>
+<dd><p>Relative path to JAGS model file</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -97,7 +111,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Kathryn Garside.</p>
+  <p></p><p>Developed by Kevin Wilson, Kathryn Garside.</p>
 </div>
 
 <div class="pkgdown-footer-right">
